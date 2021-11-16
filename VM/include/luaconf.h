@@ -122,3 +122,5 @@
         void* s; \
         long l; \
     }
+
+#define LUA_EXTRASIZE 1

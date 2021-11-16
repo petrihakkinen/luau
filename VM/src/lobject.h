@@ -47,7 +47,7 @@ typedef union
 typedef struct lua_TValue
 {
     Value value;
-    int extra;
+    int extra[LUA_EXTRASIZE];
     int tt;
 } TValue;
 
@@ -63,13 +63,14 @@ typedef struct lua_TValue
 #define ttislightuserdata(o) (ttype(o) == LUA_TLIGHTUSERDATA)
 #define ttisvector(o) (ttype(o) == LUA_TVECTOR)
 #define ttisupval(o) (ttype(o) == LUA_TUPVAL)
+#define ttisfatuserdata(o) (ttype(o) == LUA_TFATUSERDATA)
 
 /* Macros to access values */
 #define ttype(o) ((o)->tt)
 #define gcvalue(o) check_exp(iscollectable(o), (o)->value.gc)
 #define pvalue(o) check_exp(ttislightuserdata(o), (o)->value.p)
 #define nvalue(o) check_exp(ttisnumber(o), (o)->value.n)
-#define vvalue(o) check_exp(ttisvector(o), (o)->value.v)
+#define vvalue(o) check_exp(ttisfatuserdata(o), (o)->value.v)
 #define tsvalue(o) check_exp(ttisstring(o), &(o)->value.gc->ts)
 #define uvalue(o) check_exp(ttisuserdata(o), &(o)->value.gc->u)
 #define clvalue(o) check_exp(ttisfunction(o), &(o)->value.gc->cl)
@@ -112,7 +113,7 @@ typedef struct lua_TValue
         i_v[0] = (x); \
         i_v[1] = (y); \
         i_v[2] = (z); \
-        i_o->tt = LUA_TVECTOR; \
+        i_o->tt = LUA_TFATUSERDATA; \
     }
 
 #define setpvalue(obj, x) \
@@ -364,7 +365,7 @@ typedef struct Closure
 typedef struct TKey
 {
     ::Value value;
-    int extra;
+    int extra[LUA_EXTRASIZE];
     unsigned tt : 4;
     int next : 28; /* for chaining */
 } TKey;
@@ -381,7 +382,8 @@ typedef struct LuaNode
         LuaNode* n_ = (node); \
         const TValue* i_o = (obj); \
         n_->key.value = i_o->value; \
-        n_->key.extra = i_o->extra; \
+        for (int i = 0; i < LUA_EXTRASIZE; ++i) \
+            n_->key.extra[i] = i_o->extra[i]; \
         n_->key.tt = i_o->tt; \
         checkliveness(L->global, i_o); \
     }
@@ -392,7 +394,8 @@ typedef struct LuaNode
         TValue* i_o = (obj); \
         const LuaNode* n_ = (node); \
         i_o->value = n_->key.value; \
-        i_o->extra = n_->key.extra; \
+        for (int i = 0; i < LUA_EXTRASIZE; ++i) \
+            i_o->extra[i] = n_->key.extra[i]; \
         i_o->tt = n_->key.tt; \
         checkliveness(L->global, i_o); \
     }

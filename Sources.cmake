@@ -148,6 +148,7 @@ target_sources(Luau.VM PRIVATE
     VM/src/ltable.h
     VM/src/ltm.h
     VM/src/lvm.h
+    VM/src/lveclib.cpp
 )
 
 if(TARGET Luau.Repl.CLI)

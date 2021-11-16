@@ -1533,7 +1533,7 @@ static void luau_execute(lua_State* L)
                 {
                     // fast-path for userdata with C functions
                     const TValue* fn = 0;
-                    if (ttisuserdata(rb) && (fn = luaT_gettmbyobj(L, rb, TM_ADD)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rb) || ttisfatuserdata(rb)) && (fn = luaT_gettmbyobj(L, rb, TM_ADD)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -1579,7 +1579,7 @@ static void luau_execute(lua_State* L)
                 {
                     // fast-path for userdata with C functions
                     const TValue* fn = 0;
-                    if (ttisuserdata(rb) && (fn = luaT_gettmbyobj(L, rb, TM_SUB)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rb) || ttisfatuserdata(rb)) && (fn = luaT_gettmbyobj(L, rb, TM_SUB)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -1640,7 +1640,7 @@ static void luau_execute(lua_State* L)
                     // fast-path for userdata with C functions
                     StkId rbc = ttisnumber(rb) ? rc : rb;
                     const TValue* fn = 0;
-                    if (ttisuserdata(rbc) && (fn = luaT_gettmbyobj(L, rbc, TM_MUL)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rbc) || ttisfatuserdata(rbc)) && (fn = luaT_gettmbyobj(L, rbc, TM_MUL)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -1701,7 +1701,7 @@ static void luau_execute(lua_State* L)
                     // fast-path for userdata with C functions
                     StkId rbc = ttisnumber(rb) ? rc : rb;
                     const TValue* fn = 0;
-                    if (ttisuserdata(rbc) && (fn = luaT_gettmbyobj(L, rbc, TM_DIV)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rbc) || ttisfatuserdata(rbc)) && (fn = luaT_gettmbyobj(L, rbc, TM_DIV)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -1833,7 +1833,7 @@ static void luau_execute(lua_State* L)
                 {
                     // fast-path for userdata with C functions
                     const TValue* fn = 0;
-                    if (ttisuserdata(rb) && (fn = luaT_gettmbyobj(L, rb, TM_MUL)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rb) || ttisfatuserdata(rb)) && (fn = luaT_gettmbyobj(L, rb, TM_MUL)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -1879,7 +1879,7 @@ static void luau_execute(lua_State* L)
                 {
                     // fast-path for userdata with C functions
                     const TValue* fn = 0;
-                    if (ttisuserdata(rb) && (fn = luaT_gettmbyobj(L, rb, TM_DIV)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rb) || ttisfatuserdata(rb)) && (fn = luaT_gettmbyobj(L, rb, TM_DIV)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 3 < L->stack + L->stacksize);
@@ -2044,7 +2044,7 @@ static void luau_execute(lua_State* L)
                 {
                     // fast-path for userdata with C functions
                     const TValue* fn = 0;
-                    if (ttisuserdata(rb) && (fn = luaT_gettmbyobj(L, rb, TM_UNM)) && ttisfunction(fn) && clvalue(fn)->isC)
+                    if ((ttisuserdata(rb) || ttisfatuserdata(rb)) && (fn = luaT_gettmbyobj(L, rb, TM_UNM)) && ttisfunction(fn) && clvalue(fn)->isC)
                     {
                         // note: it's safe to push arguments past top for complicated reasons (see top of the file)
                         LUAU_ASSERT(L->top + 2 < L->stack + L->stacksize);

@@ -67,6 +67,7 @@ enum lua_Type
     LUA_TLIGHTUSERDATA,
     LUA_TNUMBER,
     LUA_TVECTOR,
+    LUA_TFATUSERDATA,
 
     LUA_TSTRING, /* all types above this must be value types, all types below this must be GC types - see iscollectable */
 

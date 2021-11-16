@@ -431,7 +431,7 @@ const char* lua_namecallatom(lua_State* L, int* atom)
 const float* lua_tovector(lua_State* L, int idx)
 {
     StkId o = index2adr(L, idx);
-    if (!ttisvector(o))
+    if (!ttisfatuserdata(o))
     {
         return NULL;
     }
